@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User Id</strong>
+  <%= @appoint.user_id %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @appoint.start_time %>
+
+</p>
+
+
+
+
+<%= link_to 'Edit', edit_appoint_path(@appoint) %> |
+<%= link_to 'Back', appoints_path %>
+
+

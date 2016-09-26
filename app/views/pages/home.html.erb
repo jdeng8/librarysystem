@@ -1,0 +1,25 @@
+<h1>Pages#home</h1>
+<p>
+  <strong>Name:</strong>
+  <%= current_user.name%>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= current_user.email %>
+
+</p>
+<% if current_user.privilege!='SAdmin'%>
+    <p><td><%= link_to 'Edit Profile', edit_user_registration_path(current_user) %></td></p>
+<% end%>
+<% if current_user.privilege!= 'Member'%>
+    <p><td><%= link_to 'Manage Users', user_list_path%><td></p>
+    <p><td><%= link_to 'Manage Rooms', rooms_path%><td></p>
+    <p><td><%= link_to 'Manage Reservation', appoints_path%><td></p>
+<%end%>
+<% if current_user.privilege=='Member'%>
+    <p><td><%= link_to 'Reserve a room', new_appoint_path(user_id: current_user.id) %></td></p>
+    <p><td><%= link_to 'Current reservation', appoints_path(user_id: current_user.id) %></td></p>
+    <p><td><%= link_to 'Reservation history', user_url(current_user) %></td></p>
+<% end%>
+

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+<h1>Appoints</h1>
+
+<table style="border: dotted;margin-left: 20px">
+  <thead>
+  <tr>
+    <th>Start at</th>
+    <th>room number</th>
+
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @user.appoints.each do |appoint| %>
+      <tr>
+        <td><%= appoint.start_time %></td>
+        <td><%= Room.find(appoint.room_id).number %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+

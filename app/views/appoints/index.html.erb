@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>appoints</h1>
+
+
+<%= week_calendar events: @appoints do |date, appoints| %>
+    <%= date %>
+
+    <%appoints.each do |appoint| %>
+        <div>
+          <%= User.find(appoint.user_id).name %>
+          <%= appoint.start_time %>
+        </div>
+    <% end %>
+<% end %>
+
+<table>
+
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Start Time</th>
+
+
+
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @appoints.each do |appoint| %>
+      <tr>
+        <td><%= appoint.user_id %></td>
+        <td><%= appoint.start_time %></td>
+
+
+        <td><%= link_to 'Show', appoint %></td>
+        <td><%= link_to 'Edit', edit_appoint_path(appoint) %></td>
+        <td><%= link_to 'Destroy', appoint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+
+
+
+</table>
+
+<br>
+
+<%= link_to 'New appoint', new_appoint_path %>

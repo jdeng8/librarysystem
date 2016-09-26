@@ -1,0 +1,30 @@
+<%= form_for(appoint) do |f| %>
+  <% if appoint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(appoint.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% appoint.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user %>
+    <%= select("appoint", "user_id", User.all.collect{ |c| [ c.email, c.id] }) %>
+  </div>
+  <div class="field">
+    <%= f.label :room %>
+    <%= select("appoint", "room_id", Room.all.collect{ |c| [ c.number, c.id] }) %>
+  </div>
+  <div class="field">
+    <%= f.label :start_time %>
+    <%= f.datetime_select :start_time %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

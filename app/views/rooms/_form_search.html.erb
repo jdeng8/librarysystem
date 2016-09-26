@@ -1,0 +1,25 @@
+<%= form_for(rooms_search_path) do |f| %>
+
+    <div class="field">
+      <%= f.label :Number %>
+      <%= f.text_field :number %>
+    </div>
+
+    <div class="field">
+      <%= f.label :Vacant %>
+      <%= f.text_field :vacant %>
+    </div>
+    <div class="field">
+      <%= f.label :Size %>
+      <%= f.text_field :size %>
+    </div>
+    <div class="field">
+      <%= f.label :Building %>
+      <%= f.text_field :building %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+
+<% end %>

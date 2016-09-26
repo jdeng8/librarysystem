@@ -1,0 +1,31 @@
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Email</th>
+
+
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+      <% if user.privilege!='Member'%>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.privilege %></td>
+
+
+        <% if user.privilege!=current_user.privilege%>
+          <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
+      <%end%>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<p><%= link_to 'New Admin', users_new_path %></p>
