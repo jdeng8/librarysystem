@@ -7,4 +7,15 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  after_create :set_admin
+
+  private
+  def set_admin
+    if  User.count == 1
+      User.first.update_attribute(:privilege, 'SAdmin')
+    else
+      return true
+    end
+  end
 end
