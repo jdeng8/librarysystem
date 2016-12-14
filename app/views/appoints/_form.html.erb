@@ -13,16 +13,31 @@
 
   <div class="field">
     <%= f.label :user %>
-    <%= select("appoint", "user_id", User.all.collect{ |c| [ c.email, c.id] }) %>
+    <% if(current_user.privilege!='Member')%>
+      <%= select("appoint", "user_id", User.where(privilege:"Member").collect{ |c| [ c.email, c.id] }) %>
+    <% else %>
+        <%= f.label User.find(current_user.id).name %>
+    <%end%>
   </div>
-  <div class="field">
+
     <%= f.label :room %>
+    <% if  !params[:room_id] %>
+  <div class="field">
     <%= select("appoint", "room_id", Room.all.collect{ |c| [ c.number, c.id] }) %>
   </div>
+        <%else%>
+        <%= select("appoint", "room_id", Room.where(:id=>params[:room_id]).collect{ |c| [ c.number, c.id] }) %>
+        <p></p>
+        <%end%>
   <div class="field">
     <%= f.label :start_time %>
-    <%= f.datetime_select :start_time %>
+    <%= f.datetime_select :start_time, :discard_minute => true %>
   </div>
+
+    <div>
+      <%= f.label 'length'  %>
+      <%= f.number_field 'length', min:0, max:2 %>
+    </div>
 
   <div class="actions">
     <%= f.submit %>

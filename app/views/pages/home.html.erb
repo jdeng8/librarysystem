@@ -1,4 +1,4 @@
-<h1>Pages#home</h1>
+<h1>Homepage</h1>
 <p>
   <strong>Name:</strong>
   <%= current_user.name%>
@@ -19,7 +19,8 @@
 <%end%>
 <% if current_user.privilege=='Member'%>
     <p><td><%= link_to 'Reserve a room', new_appoint_path(user_id: current_user.id) %></td></p>
-    <p><td><%= link_to 'Current reservation', appoints_path(user_id: current_user.id) %></td></p>
+    <p><td><%= link_to 'My schedule', appoints_path(user_id: current_user.id) %></td></p>
+    <p><td><%= link_to 'Rooms', rooms_path %></td></p>
     <p><td><%= link_to 'Reservation history', user_url(current_user) %></td></p>
 <% end%>
 

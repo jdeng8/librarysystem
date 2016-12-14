@@ -4,8 +4,18 @@ class AppointsController < ApplicationController
   # GET /appoints
   # GET /appoints.json
   def index
-   # @appoints = Appoint.all
-    @appoints=Appoint.where( :room_id=>params[:room_id])
+    if(current_user!="Member")
+      @appoints=Appoint.all.order(start_time: :desc)
+      if params[:room_id]
+      @appoints=Appoint.where( :room_id=>params[:room_id]).order(start_time: :desc)
+      end
+    end
+    if params[:room_id]
+      @appoints=Appoint.where( :room_id=>params[:room_id]).order(start_time: :desc)
+    end
+    if params[:user_id]
+        @appoints=Appoint.where( :user_id=>params[:user_id]).order(start_time: :desc)
+    end
     #respond_to do |format|
     #  format.html # list.html.erb      format.json { render json: @appoints }
     #end
@@ -25,7 +35,6 @@ class AppointsController < ApplicationController
   # GET /appoints/new
   def new
     @appoint = Appoint.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @appoint }
@@ -42,6 +51,13 @@ class AppointsController < ApplicationController
   # POST /appoints.json
   def create
     @appoint = Appoint.new(appoint_params)
+    @appoint.get_current= current_user.privilege
+    if current_user.privilege=="Member"
+      @appoint.user_id=current_user.id
+    end
+    #if params[:room_id]
+    #  @appoint.room_id=params[:room_id]
+    #end
 
     respond_to do |format|
       if @appoint.save
@@ -81,6 +97,7 @@ class AppointsController < ApplicationController
     end
   end
 
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_appoint
@@ -89,7 +106,6 @@ class AppointsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def appoint_params
-    params.require(:appoint).permit(:user_id, :start_time, :room_id)
+    params.require(:appoint).permit(:user_id, :start_time, :room_id, :end_time, :length)
   end
-
 end

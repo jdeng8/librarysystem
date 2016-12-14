@@ -1,20 +1,29 @@
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong>User Id</strong>
-  <%= @appoint.user_id %>
+  <%= User.find(@appoint.user_id).email %>
 </p>
 
 <p>
   <strong>Start time:</strong>
-  <%= @appoint.start_time %>
+  <%= @appoint.start_time.strftime('%Y-%m-%d %H') %>
+
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @appoint.end_time.strftime('%Y-%m-%d %H') %>
+
+</p>
+
+<p>
+  <strong>length:</strong>
+  <%= @appoint.length %>
 
 </p>
 
 
-
-
 <%= link_to 'Edit', edit_appoint_path(@appoint) %> |
-<%= link_to 'Back', appoints_path %>
+<%= link_to 'Back', :back %>
 
 

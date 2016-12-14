@@ -1,0 +1,23 @@
+<p>
+  <strong>Booking History:</strong>
+</p>
+
+<table style="border: dotted;margin-left: 20px">
+  <thead>
+  <tr>
+    <th>Starts at</th>
+    <th>By Whom</th>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @room.appoints.each do |appoint| %>
+      <tr>
+        <td><%= appoint.start_time %></td>
+        <td><%= User.find(appoint.user_id).name %></td>
+
+      </tr>
+  <% end %>
+  </tbody>
+</table>

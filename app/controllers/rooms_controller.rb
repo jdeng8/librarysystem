@@ -36,7 +36,7 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = Room.new(room_params)
-
+    @room.vacant="Available"
     respond_to do |format|
       if @room.save
         format.html { redirect_to @room, notice: 'User was successfully created.' }
@@ -51,6 +51,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1
   # PATCH/PUT /rooms/1.json
   def update
+    @room = Room.find(params[:id])
     respond_to do |format|
       if @room.update(room_params)
         format.html { redirect_to @room, notice: 'User was successfully updated.' }
@@ -73,19 +74,56 @@ class RoomsController < ApplicationController
     end
   end
 
-  def search
-    @rooms = Room.all
+  def result
+    @number = params[:number].to_s
+    @status = params[:status].to_s
+    @size = params[:size].to_s
+    @building = params[:building].to_s
 
-    message = String.new
+=begin
 
-    @rooms.each do |room|
-      message = "Room " + room.number.to_s + ","
+    if(@number != nil)
+      @condition = "number = #{@number}"
     end
 
-      respond_to do |format|
-        format.html { redirect_to pages_page1_path, notice: "Search results: #{message} according to your requirements" }
-        format.json { head :no_content }
-      end
+    if(@status != "none")
+      @condition = @condition + " and " + "vacant = #{@status}"
+    end
+
+    if(@size != "none")
+      @condition = @condition + " and " + "size = #{@size}"
+    end
+
+    if(@building != "none")
+      @condition = @condition + " and " + "building = #{@building}"
+    end
+
+    @results =  Room.where(@condition)
+
+=end
+
+    @results  = Room.all
+
+    if(@number != "")
+      @results = @results.select{|result| result.number == @number.to_i}
+    end
+
+    if(@status != "none")
+      @results = @results.select{|result| result.vacant == @status}
+    end
+
+    if(@size != "none")
+      @results = @results.select{|result| result.size == @size.to_i}
+    end
+
+    if(@building != "none")
+      @results = @results.select{|result| result.building == @building}
+    end
+
+  end
+
+  def view
+    @room = Room.find(params[:id])
   end
 
   private

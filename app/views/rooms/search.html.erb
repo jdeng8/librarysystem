@@ -1,4 +1,46 @@
 <h1>Search</h1>
 
-<%= render 'form_search', room: @rooms %>
+<body>
+<form action = "\rooms\result">
+  Room Number
+  <br>
+  <input type = "text" name = "number"/>
 
+  <br>
+  Room Size
+  <br>
+  <select name = "size">
+    <option value = "none">none</option>
+    <option value = "2">2</option>
+    <option value = "4">4</option>
+    <option value = "8">8</option>
+  </select>
+
+  <br>
+  Status
+  <br>
+  <select name = "status">
+    <option value = "none">none</option>
+    <option value = "Available">Available</option>
+    <option value = "Not Aailable">Not available</option>
+  </select>
+
+  <br>
+  Building
+  <br>
+  <select name = "building">
+    <option value = "none">none</option>
+    <option value = "Hunt">Hunt</option>
+    <option value = "DH">DH Hill</option>
+  </select>
+
+  <br>
+  <br>
+  <br>
+  <input type = "submit"/>
+
+</form>
+<div>
+<td><%= link_to 'Rooms', rooms_path %></td>
+</div>
+</body>

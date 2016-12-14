@@ -1,0 +1,47 @@
+<h1>Search Results</h1>
+
+<br>
+The results is :
+<br>
+
+<table>
+  <thead>
+  <tr>
+    <th>Number</th>
+    <th>Size</th>
+    <th>Vacant</th>
+    <th>Building</th>
+
+
+    <th colspan="10"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @results.each do |room| %>
+      <tr>
+        <td><%= room.number %></td>
+        <td><%= room.size %></td>
+        <td><%= room.vacant %></td>
+        <td><%= room.building %></td>
+
+
+        <td><%= link_to 'Schedule', appoints_path(room_id: room.id) %></td>
+        <% if current_user.privilege!="Member"%>
+            <td><%= link_to 'History', room %></td>
+          <td><%= link_to 'Edit', edit_room_path(room) %></td>
+          <td><%= link_to 'Delete', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%else%>
+            <td><%= link_to 'Reserve', new_appoint_path(room_id: room.id) %></td>
+        <%end%>
+
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p><% @results.size %></p>
+
+<div>
+<td><%= link_to 'Rooms', rooms_path %></td>
+</div>

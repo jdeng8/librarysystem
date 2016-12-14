@@ -27,7 +27,7 @@
         <% end %>
 
         <% if (user.privilege!=current_user.privilege and user.privilege!="SAdmin") %>
-          <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
       <%end%>
       </tr>

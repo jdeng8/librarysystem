@@ -2,18 +2,25 @@ Rails.application.routes.draw do
 
   get 'pages/home', to: 'page#home' , as: 'page_home'
 
-  get 'pages/page1'
-
-  get 'pages/page2'
-
-  get '/user/list', to: 'users#list' , as:'user_list'
+  get '/user/list', to: 'users#list' #, as:'user_list'
   get '/user/:id/change(.:format)', to: 'users#change',as: 'user_change'
   get '/user/new' , to: 'users#new' , as:'user_admin_new'
 
-  get "rooms/search", to: "rooms#search"
 
+  get "rooms/search", to: "rooms#search", as: 'rooms_search'
+  get "rooms/result", to: "rooms#result", as: 'rooms_search_result'
+
+  get "rooms/:id/view", to: "rooms#view" , as: "room_view"
 
   devise_for :users,:path => 'u'
+
+  resources :users do
+    resources :appoints
+  end
+
+  resources :rooms do
+    resources :appoints
+  end
 
   resources :nothings
   resources :users

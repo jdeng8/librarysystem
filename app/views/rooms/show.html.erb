@@ -1,19 +1,22 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Size</strong>
-  <%= @room.size %>
-</p>
+    <% @room.appoints.each do |appoint| %>
+
+        <% if appoint.start_time < DateTime.now %>
+            <% if appoint.end_time > DateTime.now %>
+                <% @room.vacant="Booked" %>
+                <% break %>
+            <% else %>
+                <% @room.vacant="Available" %>
+            <% end %>
+        <% end %>
+
+<% end %>
+
 
 <p>
   <strong>Number:</strong>
   <%= @room.number %>
 
-</p>
-
-<p>
-  <strong>Vacant:</strong>
-  <%= @room.vacant %>
 </p>
 
 <p>
@@ -39,7 +42,7 @@
   <tbody>
   <% @room.appoints.each do |appoint| %>
       <tr>
-        <td><%= appoint.start_time %></td>
+        <td><%= appoint.start_time.strftime('%Y-%m-%d %H')  %></td>
         <td><%= User.find(appoint.user_id).name %></td>
 
       </tr>
@@ -49,12 +52,6 @@
 
 <% end %>
 
-
 <p></p>
-<p></p>
-<%= link_to 'Edit', edit_room_path(@room) %> |
-<%= link_to 'Back', rooms_path %>
-<%= link_to 'Appo', new_appoint_path %>
-<%= link_to 'Show Appo',appoints_path(room_id: @room.id) %>
-
+<div><%= link_to 'Back', :back %>  </div>
 

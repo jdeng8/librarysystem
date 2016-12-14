@@ -1,51 +1,59 @@
-<p id="notice"><%= notice %></p>
 
-<h1>appoints</h1>
-
-
-<%= week_calendar events: @appoints do |date, appoints| %>
-    <%= date %>
-
-    <%appoints.each do |appoint| %>
-        <div>
-          <%= User.find(appoint.user_id).name %>
-          <%= appoint.start_time %>
-        </div>
-    <% end %>
-<% end %>
+<h1>Reservation</h1>
 
 <table>
+<%= week_calendar events: @appoints do |date, appoints| %>
 
+      <div >
+    <%appoints.each do |appoint| %>
+          <% if appoint.end_time > DateTime.now %>
+                <div>
+              <% if current_user.privilege!="Member" %>
+                <%= User.find(appoint.user_id).name %>
+              <%end%>
+              <%= appoint.start_time.strftime('%Y-%m-%d %H')  %>
+                  </div>
+          <% end %>
+    <% end %></div>
+
+
+<% end %>
+
+    </table>
+
+<% if params[:room_id] && current_user.privilege=='Member'%>
+<%else%>
+<table>
   <thead>
     <tr>
-      <th>User ID</th>
+      <th>User</th>
       <th>Start Time</th>
-
-
+      <th>Length </th>
 
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @appoints.each do |appoint| %>
       <tr>
-        <td><%= appoint.user_id %></td>
-        <td><%= appoint.start_time %></td>
+        <% if appoint.end_time> DateTime.now%>
+        <td><%= User.find(appoint.user_id).email %></td>
+        <td><%= appoint.start_time.strftime('%Y-%m-%d %H') %></td>
+        <td><%= appoint.length %></td>
 
 
         <td><%= link_to 'Show', appoint %></td>
-        <td><%= link_to 'Edit', edit_appoint_path(appoint) %></td>
-        <td><%= link_to 'Destroy', appoint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Edit', edit_appoint_path(appoint) %></td>
+            <td><%= link_to 'Cancle', appoint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>
-
-
-
-
 </table>
+<%end%>
+<%= link_to 'Back', :back %>
+<% if current_user.privilege!="Member"%>
+    <%= link_to 'Create a reservation', new_appoint_path(room_id: params[:room_id]) %>
+<% else %>
+<% end %>
 
-<br>
-
-<%= link_to 'New appoint', new_appoint_path %>

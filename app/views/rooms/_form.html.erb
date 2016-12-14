@@ -16,17 +16,15 @@
     <%= f.text_field :number %>
   </div>
 
-  <div class="field">
-    <%= f.label :vacant %>
-    <%= f.text_field :vacant %>
-  </div>
     <div class="field">
       <%= f.label :size %>
       <%= f.text_field :size %>
     </div>
+
+
     <div class="field">
       <%= f.label :building %>
-      <%= f.text_field :building %>
+      <%= select("room", "building", ["Hill","Hunt"]) %>
     </div>
 
 

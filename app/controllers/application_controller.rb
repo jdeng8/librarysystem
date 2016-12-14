@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user! #if not :user_signed_in?
   before_action :configure_permitted_parameters, if: :devise_controller?
-
   protected
 
   def configure_permitted_parameters
@@ -18,19 +17,18 @@ class ApplicationController < ActionController::Base
   end
   def access
     if current_user.privilege =="Member"
-
       respond_to do |format|
         format.html { redirect_to root_path, notice: 'You have no authority to access.' }
       end
     end
   end
-
   def rights(u)
     if current_user !=u
-
       respond_to do |format|
         format.html {redirect_to root_path, notice: 'You have no authority to access.' }
       end
     end
   end
+  zone = ActiveSupport::TimeZone.new("America/New_York")
+  Time.now.in_time_zone(zone)
 end
